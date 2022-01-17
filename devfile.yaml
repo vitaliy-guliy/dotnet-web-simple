@@ -1,0 +1,42 @@
+schemaVersion: 2.1.0
+metadata:
+  name: dotnet
+components:
+  - name: tools
+    container:
+      image: registry.redhat.io/codeready-workspaces/stacks-dotnet-rhel8
+      memoryLimit: 2Gi
+      mountSources: true
+      endpoints:
+        - exposure: public
+          name: 'hello-endpoint'
+          protocol: http
+          targetPort: 5000
+      volumeMounts:
+        - name: nuget
+          path: /home/jboss/.nuget
+  - name: nuget
+    volume:
+      size: 1G
+commands:
+  - id: update-dependencies
+    exec:
+      component: tools
+      workingDir: ${PROJECTS_ROOT}/dotnet-web-simple
+      commandLine: "dotnet restore"
+      group:
+        kind: build
+  - id: build
+    exec:
+      component: tools
+      workingDir: ${PROJECTS_ROOT}/dotnet-web-simple
+      commandLine: "dotnet build"
+      group:
+        kind: build
+  - id: run
+    exec:
+      component: tools
+      workingDir: ${PROJECTS_ROOT}/dotnet-web-simple
+      commandLine: "dotnet run"
+      group:
+        kind: run
