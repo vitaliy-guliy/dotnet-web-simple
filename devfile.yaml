@@ -14,26 +14,26 @@ components:
           targetPort: 5000
       volumeMounts:
         - name: nuget
-          path: /home/jboss/.nuget
+          path: /home/user/.nuget
   - name: nuget
     volume:
       size: 1G
 commands:
-  - id: update-dependencies
+  - id: 1-update-dependencies
     exec:
       component: tools
       workingDir: ${PROJECTS_ROOT}/dotnet-web-simple
       commandLine: "dotnet restore"
       group:
         kind: build
-  - id: build
+  - id: 2-build
     exec:
       component: tools
       workingDir: ${PROJECTS_ROOT}/dotnet-web-simple
       commandLine: "dotnet build"
       group:
         kind: build
-  - id: run
+  - id: 3-run
     exec:
       component: tools
       workingDir: ${PROJECTS_ROOT}/dotnet-web-simple
