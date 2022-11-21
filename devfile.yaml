@@ -37,6 +37,6 @@ commands:
     exec:
       component: tools
       workingDir: ${PROJECTS_ROOT}/dotnet-web-simple
-      commandLine: "dotnet run"
+      commandLine: "dotnet watch run"
       group:
         kind: run
